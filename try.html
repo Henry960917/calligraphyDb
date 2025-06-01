@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>曾子恆字庫</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #28a8ac;
+    }
+    input {    /*輸入框*/
+      padding: 8px 12px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      width: 200px;
+      background-color: rgb(255, 255, 255);
+    }
+    .card {    /*字體卡*/
+      border: 5px solid #e20808;
+      border-radius: 12px;
+      padding: 10px;
+      max-width: 300px;
+      background: #d8ff2c;
+      margin: 10px;
+    }
+    .card img {    /*字體卡帶圓角*/
+      width: 100%;
+      border-radius: 10px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>歡迎使用曾子恆字庫</h1>
+
+<label for="searchInput">請輸入您想查詢的字：</label>
+<input type="text" id="searchInput" placeholder="例如：丁">
+
+<div class="container" id="result"></div>
+
+<script>
+  const data = [
+    {
+      character: "丁",
+      style: "硬筆",
+      author: "曾子恆",
+      image: "https://raw.githubusercontent.com/Henry960917/calligraphyDb/main/%E7%A1%AC%E7%AD%86%E5%AD%97/Photoroom_20250218_231024.jpg"
+    },
+    {
+      character: "丁",
+      style: "硬筆",
+      author: "曾子恆",
+      image: "https://raw.githubusercontent.com/Henry960917/calligraphyDb/main/%E7%A1%AC%E7%AD%86%E5%AD%97/Photoroom_20250218_231024.jpg"
+    }
+  ];
+
+  const input = document.getElementById("searchInput");
+  const resultContainer = document.getElementById("result");
+
+  function render(filteredData) {
+    resultContainer.innerHTML = "";
+    if (filteredData.length === 0) {
+      resultContainer.innerHTML = "<p>查無此字</p>";
+      return;
+    }
+
+    filteredData.forEach(entry => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <h3>${entry.character}（${entry.style}）</h3>
+        <img src="${entry.image}" alt="${entry.character}">
+        <p>注音：${entry.zhuyin}</p>
+      `;
+      resultContainer.appendChild(div);
+    });
+  }
+
+  input.addEventListener("input", () => {
+    const keyword = input.value.trim();
+    const filtered = data.filter(d => d.character === keyword);
+    render(filtered);
+  });
+
+  render([]); // 初始不顯示
+</script>
+
+</body>
+</html>
